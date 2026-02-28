@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dante</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:black;
+  font-family:'Playfair Display', serif;
+  color:white;
+}
+
+/* اسم Dante بالخلفية */
+#nameGrid{
+  position:absolute;
+  inset:0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  text-align:center;
+  opacity:0.15;
+  font-size:48px;
+  z-index:0;
+}
+#nameGrid span{
+  animation: glow 4s infinite ease-in-out;
+}
+
+@keyframes glow{
+  0%,100%{opacity:.2;}
+  50%{opacity:.8;}
+}
+
+/* الصور */
+.photo{
+  position:absolute;
+  width:140px;
+  border-radius:12px;
+  opacity:0;
+  animation: photoFade 6s ease forwards;
+  box-shadow:0 0 20px rgba(255,255,255,.3);
+}
+
+@keyframes photoFade{
+  0%{opacity:0;transform:scale(.9);}
+  15%{opacity:1;}
+  70%{opacity:1;}
+  100%{opacity:0;transform:scale(1);}
+}
+
+/* ايموجيز */
+.emoji{
+  position:absolute;
+  font-size:22px;
+  animation: float 4s ease forwards;
+}
+
+@keyframes float{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-160px);opacity:0;}
+}
+
+/* طبقة فوق */
+#layer{
+  position:absolute;
+  inset:0;
+  z-index:2;
+}
+</style>
+</head>
+
+<body>
+
+<div id="nameGrid"></div>
+<div id="layer"></div>
+
+<audio id="music" src="song.mp3" loop autoplay></audio>
+
+<script>
+/* اسم Dante يملأ الشاشة */
+const grid=document.getElementById("nameGrid");
+for(let i=0;i<12;i++){
+  let s=document.createElement("span");
+  s.innerText="Dante";
+  grid.appendChild(s);
+}
+
+/* الصور */
+const photos=["p1.jpg","p2.jpg","p3.jpg","p4.jpg","p5.jpg"];
+
+function spawnPhoto(){
+  let img=document.createElement("img");
+  img.src=photos[Math.floor(Math.random()*photos.length)];
+  img.className="photo";
+  img.style.left=Math.random()*70+"%";
+  img.style.top=Math.random()*70+"%";
+  document.body.appendChild(img);
+  setTimeout(()=>img.remove(),6000);
+}
+
+setInterval(spawnPhoto,1800);
+
+/* ايموجيز */
+const emojis=["✨","💖","🌙","⭐","💫","🫶"];
+
+document.addEventListener("touchstart",(e)=>{
+  for(let i=0;i<4;i++){
+    let em=document.createElement("div");
+    em.className="emoji";
+    em.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+    em.style.left=(e.touches[0].clientX+Math.random()*30)+"px";
+    em.style.top=(e.touches[0].clientY)+"px";
+    document.body.appendChild(em);
+    setTimeout(()=>em.remove(),4000);
+  }
+});
+
+/* iOS تأكيد تشغيل الصوت */
+document.body.addEventListener("touchstart",()=>{
+  const m=document.getElementById("music");
+  if(m.paused) m.play();
+},{once:true});
+</script>
+
+</body>
+</html>
