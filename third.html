@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dante🩷</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<!-- خط كيوت للاسم -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 html,body{
@@ -19,40 +20,38 @@ html,body{
   color:white;
 }
 
-/* اسم Dante بالخلفية */
-#nameGrid{
+/* اسم Dante🩷 */
+.name{
   position:absolute;
-  inset:0;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  text-align:center;
-  opacity:0.15;
-  font-size:48px;
-  z-index:0;
-}
-#nameGrid span{
-  animation: glow 4s infinite ease-in-out;
+  font-family:'Pacifico', cursive;
+  font-size:46px;
+  opacity:0;
+  color:white;
+  text-shadow:0 0 25px rgba(255,182,193,.8);
+  animation: nameMove 7s ease forwards;
 }
 
-@keyframes glow{
-  0%,100%{opacity:.2;}
-  50%{opacity:.8;}
+@keyframes nameMove{
+  0%{opacity:0;transform:translateY(30px) scale(.9);}
+  20%{opacity:1;}
+  80%{opacity:1;}
+  100%{opacity:0;transform:translateY(-30px) scale(1);}
 }
 
-/* الصور */
+/* الصور (أكبر وأطول) */
 .photo{
   position:absolute;
-  width:140px;
-  border-radius:12px;
+  width:190px;
+  border-radius:16px;
   opacity:0;
-  animation: photoFade 6s ease forwards;
-  box-shadow:0 0 20px rgba(255,255,255,.3);
+  animation: photoShow 8s ease forwards;
+  box-shadow:0 0 30px rgba(255,255,255,.3);
 }
 
-@keyframes photoFade{
+@keyframes photoShow{
   0%{opacity:0;transform:scale(.9);}
-  15%{opacity:1;}
-  70%{opacity:1;}
+  20%{opacity:1;}
+  85%{opacity:1;}
   100%{opacity:0;transform:scale(1);}
 }
 
@@ -60,74 +59,73 @@ html,body{
 .emoji{
   position:absolute;
   font-size:22px;
-  animation: float 4s ease forwards;
+  animation: float 4.5s ease forwards;
 }
 
 @keyframes float{
   from{transform:translateY(0);opacity:1;}
   to{transform:translateY(-160px);opacity:0;}
 }
-
-/* طبقة فوق */
-#layer{
-  position:absolute;
-  inset:0;
-  z-index:2;
-}
 </style>
 </head>
 
 <body>
 
-<div id="nameGrid"></div>
-<div id="layer"></div>
-
 <audio id="music" src="song.mp3" loop autoplay></audio>
 
 <script>
-/* اسم Dante يملأ الشاشة */
-const grid=document.getElementById("nameGrid");
-for(let i=0;i<12;i++){
-  let s=document.createElement("span");
-  s.innerText="Dante🩷";
-  grid.appendChild(s);
-}
+/* تشغيل الصوت (iOS) */
+document.body.addEventListener("touchstart",()=>{
+  const m=document.getElementById("music");
+  if(m.paused) m.play();
+},{once:true});
 
-/* الصور */
+/* الصور بتوازن */
 const photos=["p1.JPG","p2.JPG","p3.JPG","p4.DNG","p5.JPG","p6.JPG","p7.JPG","p8.JPG","p9.JPG","p10.JPG","p11.JPG","p12.JPG","p13.JPG","p14.JPG"];
 
-function spawnPhoto(){
-  let img=document.createElement("img");
-  img.src=photos[Math.floor(Math.random()*photos.length)];
-  img.className="photo";
-  img.style.left=Math.random()*70+"%";
-  img.style.top=Math.random()*70+"%";
-  document.body.appendChild(img);
-  setTimeout(()=>img.remove(),6000);
-}
+let photoIndex=0;
 
-setInterval(spawnPhoto,1800);
+function spawnPhoto(){
+  const img=document.createElement("img");
+  img.src=photos[photoIndex];
+  photoIndex=(photoIndex+1)%photos.length;
+
+  img.className="photo";
+  img.style.left=Math.random()*60+"%";
+  img.style.top=Math.random()*60+"%";
+  document.body.appendChild(img);
+
+  setTimeout(()=>img.remove(),8000);
+}
+setInterval(spawnPhoto,2000);
+
+/* اسم Dante🩷 */
+function spawnName(){
+  const n=document.createElement("div");
+  n.className="name";
+  n.innerText="Dante🩷";
+  n.style.left=Math.random()*65+"%";
+  n.style.top=Math.random()*65+"%";
+  document.body.appendChild(n);
+
+  setTimeout(()=>n.remove(),7000);
+}
+setInterval(spawnName,2600);
 
 /* ايموجيز */
-const emojis=["✨","💖","🌙","⭐","💫","🫶"];
+const emojis=["🩷","✨","💖","⭐","💫"];
 
 document.addEventListener("touchstart",(e)=>{
   for(let i=0;i<4;i++){
-    let em=document.createElement("div");
+    const em=document.createElement("div");
     em.className="emoji";
     em.innerText=emojis[Math.floor(Math.random()*emojis.length)];
     em.style.left=(e.touches[0].clientX+Math.random()*30)+"px";
     em.style.top=(e.touches[0].clientY)+"px";
     document.body.appendChild(em);
-    setTimeout(()=>em.remove(),4000);
+    setTimeout(()=>em.remove(),4500);
   }
 });
-
-/* iOS تأكيد تشغيل الصوت */
-document.body.addEventListener("touchstart",()=>{
-  const m=document.getElementById("music");
-  if(m.paused) m.play();
-},{once:true});
 </script>
 
 </body>
