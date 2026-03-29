@@ -18,7 +18,7 @@ html,body{
   font-family:'Playfair Display', serif;
 }
 
-/* ⭐ الصورة الكبيرة */
+/* ⭐ Spotlight */
 .spotlight{
   position:absolute;
   top:50%;
@@ -100,16 +100,18 @@ html,body{
 
 <body>
 
-<audio id="music" src="song.mp3" loop autoplay></audio>
+<audio id="music" src="song.mp3" loop></audio>
 
 <script>
-/* تشغيل الصوت */
-document.body.addEventListener("touchstart",()=>{
+/* تشغيل الصوت على touch أو click */
+function playMusic(){
   const m=document.getElementById("music");
   if(m.paused) m.play();
-},{once:true});
+}
+document.body.addEventListener("touchstart", playMusic, {once:true});
+document.body.addEventListener("click", playMusic, {once:true});
 
-/* الصور */
+/* مصفوفة الصور */
 const photos=["p1.JPG","p2.JPG","p3.JPG","p4.DNG","p5.JPG","p6.JPG","p7.JPG","p8.JPG","p9.JPG","p10.JPG","p11.JPG","p12.JPG","p13.JPG","p14.JPG"];
 
 /* ⭐ Spotlight */
@@ -148,18 +150,13 @@ setInterval(spawnName,2500);
 
 /* 💖 love you + emoji */
 const emojis=["🎀","🌸","🩷","💞"];
-
 document.addEventListener("touchstart",(e)=>{
   for(let i=0;i<3;i++){
     const em=document.createElement("div");
     em.className="emoji";
-
-    const emoji=emojis[Math.floor(Math.random()*emojis.length)];
-    em.innerText="love you " + emoji;
-
+    em.innerText="love you " + emojis[Math.floor(Math.random()*emojis.length)];
     em.style.left=(e.touches[0].clientX+Math.random()*30)+"px";
     em.style.top=(e.touches[0].clientY)+"px";
-
     document.body.appendChild(em);
     setTimeout(()=>em.remove(),4500);
   }
