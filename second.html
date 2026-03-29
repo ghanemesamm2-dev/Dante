@@ -17,7 +17,6 @@ html,body{
     font-family:'Playfair Display', serif;
 }
 
-/* الخلفية */
 body{
     background:url("bg.GIF") center/cover no-repeat fixed;
     position:relative;
@@ -25,7 +24,6 @@ body{
     transition:opacity .8s ease;
 }
 
-/* تعتيم خفيف */
 body::after{
     content:"";
     position:absolute;
@@ -34,7 +32,6 @@ body::after{
     z-index:0;
 }
 
-/* النص الثابت */
 #mainText{
     position:absolute;
     z-index:2;
@@ -49,7 +46,6 @@ body::after{
     text-shadow:0 0 18px rgba(255,255,255,.35);
 }
 
-/* الجمل العشوائية */
 .floating{
     position:absolute;
     z-index:2;
@@ -67,7 +63,6 @@ body::after{
     100%{opacity:0;}
 }
 
-/* الايموجيز */
 .emoji{
     position:absolute;
     z-index:3;
@@ -80,7 +75,6 @@ body::after{
     to{transform:translateY(220px);opacity:0;}
 }
 
-/* زر الانتقال */
 #next{
     position:absolute;
     bottom:30px;
@@ -101,7 +95,6 @@ body::after{
     color:black;
 }
 
-/* اختفاء للانتقال */
 .fadeOut{
     opacity:0;
 }
@@ -116,46 +109,43 @@ Of cloudless climes and starry skies<br>
 And all that’s best of dark and bright<br>
 Meet in her aspect and her eyes<br>
 Thus mellowed to that tender light<br>
-Which heaven to gaudy day denies<br>
-    happy birthday love its a blessing to call you mine❤️
+Which heaven to gaudy day denies<br><br>
 
-    
-
+happy birthday love its a blessing to call you mine ❤️
 </div>
 
 <button id="next">Continue ✨</button>
 
-<audio id="music" src="song.mp3" loop></audio>
+<audio id="music" src="song.mp3" autoplay loop></audio>
 
 <script>
-/* تشغيل الموسيقى (iOS) */
 document.body.addEventListener("touchstart",()=>{
     const m=document.getElementById("music");
     if(m.paused) m.play();
 },{once:true});
 
-/* الجمل */
+/* الجمل (تم التصحيح هنا) */
 const lines=[
 "Happy birthday love",
-"i love you❤️",
-"You deserve all the happiness in the world🖤",
-"Every time you move you look like you're dancing🌸",
-"The way you move is poetry untamed🎀",
-"Every step you take the stars are framed✨",
-"a universe between you and i💞",
-" mine 💖",
-"your touch like velvet💝",
-"your smile ignites🌺",
-"your presence felt like an endless summer🌻",
-"your laugh would warm a home with empty heart🦋",
+"i love you ❤️",
+"You deserve all the happiness in the world 🖤",
+"Every time you move you look like you're dancing 🌸",
+"The way you move is poetry untamed 🎀",
+"Every step you take the stars are framed ✨",
+"a universe between you and i 💞",
+"mine 💖",
+"your touch like velvet 💝",
+"your smile ignites 🌺",
+"your presence felt like an endless summer 🌻",
+"your laugh would warm a home with empty heart 🦋",
 "you are my everything",
 "only me and you",
 "only me and you",
-"The way you move is poetry untamed🎀",
-"Every step you take the stars are framed✨",
-" mine 💖",
-" mine 💖",
-" mine 💖",   
+"The way you move is poetry untamed 🎀",
+"Every step you take the stars are framed ✨",
+"mine 💖",
+"mine 💖",
+"mine 💖"
 ];
 
 function spawnLine(){
@@ -170,7 +160,7 @@ function spawnLine(){
 setInterval(spawnLine,2500);
 
 /* ايموجيز */
-const emojis=["✨","💖","⭐","🌙","💫","🫶","🌸"];
+const emojis=["🎀","🌸","🩷","💞"];
 
 document.addEventListener("touchstart",(e)=>{
     for(let i=0;i<3;i++){
@@ -184,7 +174,7 @@ document.addEventListener("touchstart",(e)=>{
     }
 });
 
-/* الانتقال للصفحة الثالثة */
+/* الانتقال */
 document.getElementById("next").onclick=()=>{
     document.body.classList.add("fadeOut");
     setTimeout(()=>{
