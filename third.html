@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dante🩷</title>
 
+<!-- خط كيوت للاسم -->
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -16,52 +17,10 @@ html,body{
   overflow:hidden;
   background:black;
   font-family:'Playfair Display', serif;
+  color:white;
 }
 
-/* ⭐ Spotlight */
-.spotlight{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) scale(.9);
-  width:320px;
-  height:420px;
-  object-fit:cover;
-  border-radius:20px;
-  opacity:0;
-  z-index:5;
-  box-shadow:0 0 60px rgba(255,182,193,.7);
-  animation: spotlightAnim 6s ease forwards;
-}
-
-@keyframes spotlightAnim{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.8);}
-  20%{opacity:1;}
-  80%{opacity:1;}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(1);}
-}
-
-/* الصور العادية */
-.photo{
-  position:absolute;
-  width:220px;
-  height:300px;
-  object-fit:cover;
-  border-radius:16px;
-  opacity:0;
-  z-index:2;
-  box-shadow:0 0 25px rgba(255,255,255,.3);
-  animation: photoShow 8s ease forwards;
-}
-
-@keyframes photoShow{
-  0%{opacity:0;transform:scale(.9);}
-  20%{opacity:1;}
-  85%{opacity:1;}
-  100%{opacity:0;transform:scale(1);}
-}
-
-/* اسم Dante */
+/* اسم Dante🩷 */
 .name{
   position:absolute;
   font-family:'Pacifico', cursive;
@@ -73,21 +32,33 @@ html,body{
 }
 
 @keyframes nameMove{
-  0%{opacity:0;transform:translateY(30px);}
+  0%{opacity:0;transform:translateY(30px) scale(.9);}
   20%{opacity:1;}
   80%{opacity:1;}
-  100%{opacity:0;transform:translateY(-30px);}
+  100%{opacity:0;transform:translateY(-30px) scale(1);}
 }
 
-/* جمل love you */
+/* الصور (أكبر وأطول) */
+.photo{
+  position:absolute;
+  width:190px;
+  border-radius:16px;
+  opacity:0;
+  animation: photoShow 8s ease forwards;
+  box-shadow:0 0 30px rgba(255,255,255,.3);
+}
+
+@keyframes photoShow{
+  0%{opacity:0;transform:scale(.9);}
+  20%{opacity:1;}
+  85%{opacity:1;}
+  100%{opacity:0;transform:scale(1);}
+}
+
+/* ايموجيز */
 .emoji{
   position:absolute;
-  font-size:18px;
-  padding:6px 10px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(6px);
-  color:white;
+  font-size:22px;
   animation: float 4.5s ease forwards;
 }
 
@@ -100,61 +71,55 @@ html,body{
 
 <body>
 
-<audio id="music" src="song.mp3" loop></audio>
+<audio id="music" src="song.mp3" loop autoplay></audio>
 
 <script>
-/* تشغيل الصوت على touch أو click */
-function playMusic(){
+/* تشغيل الصوت (iOS) */
+document.body.addEventListener("touchstart",()=>{
   const m=document.getElementById("music");
   if(m.paused) m.play();
-}
-document.body.addEventListener("touchstart", playMusic, {once:true});
-document.body.addEventListener("click", playMusic, {once:true});
+},{once:true});
 
-/* مصفوفة الصور */
+/* الصور بتوازن */
 const photos=["p1.JPG","p2.JPG","p3.JPG","p4.DNG","p5.JPG","p6.JPG","p7.JPG","p8.JPG","p9.JPG","p10.JPG","p11.JPG","p12.JPG","p13.JPG","p14.JPG"];
 
-/* ⭐ Spotlight */
-function spotlight(){
-  const img=document.createElement("img");
-  img.src=photos[Math.floor(Math.random()*photos.length)];
-  img.className="spotlight";
-  document.body.appendChild(img);
-  setTimeout(()=>img.remove(),6000);
-}
-setInterval(spotlight,7000);
+let photoIndex=0;
 
-/* 📸 صور عادية */
 function spawnPhoto(){
   const img=document.createElement("img");
-  img.src=photos[Math.floor(Math.random()*photos.length)];
+  img.src=photos[photoIndex];
+  photoIndex=(photoIndex+1)%photos.length;
+
   img.className="photo";
-  img.style.left=Math.random()*70+"%";
-  img.style.top=Math.random()*70+"%";
+  img.style.left=Math.random()*60+"%";
+  img.style.top=Math.random()*60+"%";
   document.body.appendChild(img);
+
   setTimeout(()=>img.remove(),8000);
 }
-setInterval(spawnPhoto,1800);
+setInterval(spawnPhoto,2000);
 
-/* اسم Dante */
+/* اسم Dante🩷 */
 function spawnName(){
   const n=document.createElement("div");
   n.className="name";
   n.innerText="Dante🩷";
-  n.style.left=Math.random()*70+"%";
-  n.style.top=Math.random()*70+"%";
+  n.style.left=Math.random()*65+"%";
+  n.style.top=Math.random()*65+"%";
   document.body.appendChild(n);
+
   setTimeout(()=>n.remove(),7000);
 }
-setInterval(spawnName,2500);
+setInterval(spawnName,2600);
 
-/* 💖 love you + emoji */
-const emojis=["🎀","🌸","🩷","💞"];
+/* ايموجيز */
+const emojis=["🩷","✨","💖","⭐","💫"];
+
 document.addEventListener("touchstart",(e)=>{
-  for(let i=0;i<3;i++){
+  for(let i=0;i<4;i++){
     const em=document.createElement("div");
     em.className="emoji";
-    em.innerText="love you " + emojis[Math.floor(Math.random()*emojis.length)];
+    em.innerText=emojis[Math.floor(Math.random()*emojis.length)];
     em.style.left=(e.touches[0].clientX+Math.random()*30)+"px";
     em.style.top=(e.touches[0].clientY)+"px";
     document.body.appendChild(em);
